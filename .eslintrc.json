@@ -19,6 +19,8 @@
     "comma-dangle": 0,
     "operator-linebreak": 0,
     "react/prop-types": ["error", { "ignore": ["navigation"] }],
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "react/no-unstable-nested-components": 0,
+    "react/jsx-no-bind": 0
   }
 }
