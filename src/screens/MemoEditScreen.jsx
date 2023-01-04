@@ -5,6 +5,9 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Alert,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { shape, string } from "prop-types";
 import firebase from "firebase";
@@ -41,17 +44,22 @@ export default function MemoEditScreen(props) {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={body}
-          multiline
-          style={styles.input}
-          onChangeText={(text) => {
-            setBody(text);
-          }}
-        />
-      </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={body}
+            multiline
+            style={styles.input}
+            onChangeText={(text) => {
+              setBody(text);
+            }}
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <CircleButton name="check" onPress={handlePress} />
     </KeyboardAvoidingView>
   );
@@ -75,8 +83,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     fontSize: 16,
     lineHeight: 24,
-    paddingTop: 32,
-    paddingBottom: 32,
-    paddingHorizontal: 27,
+    marginTop: 32,
+    marginBottom: 160,
+    marginLeft: 27,
+    marginRight: 27,
   },
 });

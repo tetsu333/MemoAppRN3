@@ -5,6 +5,9 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Alert,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
 import firebase from "firebase";
@@ -35,18 +38,23 @@ export default function MemoCreateScreen(props) {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={bodyText}
-          multiline
-          style={styles.input}
-          onChangeText={(text) => {
-            setBodyText(text);
-          }}
-          autoFocus
-        />
-      </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={bodyText}
+            multiline
+            style={styles.input}
+            onChangeText={(text) => {
+              setBodyText(text);
+            }}
+            autoFocus
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <CircleButton name="check" onPress={handlePress} />
     </KeyboardAvoidingView>
   );
@@ -57,8 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputContainer: {
-    paddingHorizontal: 27,
-    paddingVertical: 32,
     flex: 1,
   },
   input: {
@@ -66,5 +72,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     fontSize: 16,
     lineHeight: 24,
+    marginTop: 32,
+    marginBottom: 160,
+    marginLeft: 27,
+    marginRight: 27,
   },
 });
